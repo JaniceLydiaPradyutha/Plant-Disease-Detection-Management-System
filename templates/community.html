@@ -1,0 +1,2071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmConnect - Farmer Community</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2E7D32;
+            --secondary-color: #4CAF50;
+            --accent-color: #FFD700;
+            --accent-secondary: #FF9800;
+            --text-color: #2E2E2E;
+            --background-color: #F5F5F5;
+            --card-color: #FFFFFF;
+            --alert-color: #FF5722;
+            --border-radius: 16px;
+            --box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-color);
+            background: linear-gradient(to bottom, #F5F5F5, #E8F5E9);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 8px 16px;
+            border-radius: 30px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0 3rem;
+            text-align: center;
+            background: linear-gradient(rgba(46, 125, 50, 0.1), rgba(76, 175, 80, 0.1)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-position: center;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            margin-bottom: 3rem;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .search-bar {
+            max-width: 700px;
+            margin: 0 auto;
+            display: flex;
+            box-shadow: var(--box-shadow);
+            border-radius: 50px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .search-bar:focus-within {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 20px 25px;
+            border: none;
+            font-size: 1.1rem;
+            outline: none;
+            background: white;
+        }
+
+        .search-bar button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .search-bar button:hover {
+            background-color: #1B5E20;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2.5rem;
+            margin-bottom: 4rem;
+        }
+
+        /* Cards */
+        .card {
+            background-color: var(--card-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.8rem;
+            border-bottom: 2px solid rgba(76, 175, 80, 0.2);
+            padding-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.6rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title-icon {
+            font-size: 1.8rem;
+        }
+
+        .see-all {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 8px 16px;
+            border-radius: 30px;
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .see-all:hover {
+            color: white;
+            background: var(--primary-color);
+        }
+
+        /* Discussion Section */
+        .discussion-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .discussion-item {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .discussion-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            background: white;
+        }
+
+        .discussion-icon {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+
+        .discussion-content {
+            flex: 1;
+        }
+
+        .discussion-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-color);
+        }
+
+        .discussion-content p {
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        .discussion-meta {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.95rem;
+            color: #666;
+        }
+
+        .reply-count {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(76, 175, 80, 0.1);
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+
+        /* Trending This Week */
+        .trending-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .trending-item {
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .trending-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            background: white;
+        }
+
+        .trending-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-color);
+        }
+
+        .trending-item p {
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        .read-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .read-more:hover {
+            gap: 10px;
+        }
+
+        /* Popular Topics */
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .topic-item {
+            background: rgba(76, 175, 80, 0.1);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+            border: 1px solid rgba(76, 175, 80, 0.2);
+        }
+
+        .topic-item:hover {
+            background: rgba(76, 175, 80, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* Farmer Tips */
+        .tips-card {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 215, 0, 0.05));
+            border-left: 6px solid var(--accent-color);
+        }
+
+        .tip-item {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .tip-item:last-child {
+            border-bottom: none;
+        }
+
+        .tip-author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0.8rem;
+        }
+
+        .tip-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .tip-content {
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        .see-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 1rem;
+        }
+
+        .see-more:hover {
+            gap: 10px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-primary:hover {
+            background-color: #1B5E20;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: var(--accent-secondary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background-color: #EF6C00;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 152, 0, 0.4);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: var(--box-shadow);
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(76, 175, 80, 0.2);
+            padding-bottom: 1rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--alert-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Page Content */
+        .page-content {
+            display: none;
+            padding: 2rem 0;
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .page-description {
+            font-size: 1.2rem;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Articles Grid */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .article-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .article-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .article-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article-image::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .article-card:hover .article-image::after {
+            opacity: 1;
+        }
+
+        .article-content {
+            padding: 1.8rem;
+        }
+
+        .article-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .article-content p {
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #666;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        /* Tips Page */
+        .tips-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .tip-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .tip-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .tip-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .tip-avatar-large {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .tip-author-info h4 {
+            margin-bottom: 0.3rem;
+        }
+
+        .tip-author-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .tip-content {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .tip-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .tip-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .tip-likes {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #666;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tip-likes:hover {
+            color: var(--primary-color);
+        }
+
+        /* News Page */
+        .news-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid rgba(76, 175, 80, 0.2);
+            padding: 8px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3rem 0 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .footer-section h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+            transform: translateX(5px);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* New Features */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .featured-farmer {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 2rem;
+        }
+
+        .farmer-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .farmer-info h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .farmer-specialty {
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .farmer-bio {
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1100px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+             
+            .hero h1 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+             
+            .nav-links {
+                gap: 1rem;
+            }
+             
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+             
+            .hero p {
+                font-size: 1.2rem;
+            }
+             
+            .topics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+             
+            .discussion-item {
+                flex-direction: column;
+                text-align: center;
+            }
+             
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* UI Improvements */
+        .card-header-icon {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+
+        .card-title-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .category-badge {
+            display: inline-block;
+            background: rgba(76, 175, 80, 0.1);
+            color: var(--primary-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .discussion-stats {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .image-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            z-index: 1;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .article-card:hover .image-placeholder {
+            opacity: 1;
+        }
+
+        .like-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .like-btn:hover, .like-btn.liked {
+            color: #e74c3c;
+        }
+
+        .like-btn.liked i {
+            animation: pulse 0.5s;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            padding: 15px 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-seedling"></i>
+                    <span>FarmConnect</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#" class="nav-link active" data-page="home"><i class="fas fa-home"></i> Home</a>
+                    <a href="#" class="nav-link" data-page="discussions"><i class="fas fa-comments"></i> Discussions</a>
+                    <a href="#" class="nav-link" data-page="trending"><i class="fas fa-chart-line"></i> Trending</a>
+                    <a href="#" class="nav-link" data-page="tips"><i class="fas fa-lightbulb"></i> Tips</a>
+                    <a href="#" class="nav-link" data-page="news"><i class="fas fa-newspaper"></i> News</a>
+                </div>
+                <div class="user-actions">
+                    <!-- My Profile button removed as requested -->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <span id="notification-text"></span>
+    </div>
+
+    <!-- Home Page -->
+    <div id="home-page" class="page-content active">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1> Explore, Share & Connect with Fellow Farmers</h1>
+                <p>Join the FarmConnect community – share your farming experiences, get real tips from fellow growers, and discover innovative agricultural techniques.</p>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search discussions, tips, or farmers...">
+                    <button>Search</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <div class="container">
+            <div class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-number">15,342</div>
+                    <div class="stat-label">Active Farmers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="stat-number">8,765</div>
+                    <div class="stat-label">Discussions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div class="stat-number">3,421</div>
+                    <div class="stat-label">Farming Tips</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div class="stat-number">127</div>
+                    <div class="stat-label">Crop Varieties</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Featured Farmer -->
+        <div class="container">
+            <div class="featured-farmer">
+                <div class="farmer-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="farmer-info">
+                    <h3>Rajesh Kumar</h3>
+                    <div class="farmer-specialty">Organic Farming Specialist</div>
+                    <p class="farmer-bio">With over 15 years of experience in organic farming, Rajesh has successfully transformed his 10-acre farm into a model of sustainable agriculture. He specializes in crop rotation, natural pest control, and soil health management.</p>
+                    <button class="btn btn-secondary">View Profile</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="container">
+            <div class="main-content">
+                <!-- Left Column -->
+                <div class="left-column">
+                    <!-- Featured Discussions Section -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title-container">
+                                <div class="card-header-icon">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <h2 class="card-title">Featured Discussions</h2>
+                            </div>
+                            <a href="#" class="see-all nav-link" data-page="discussions">View All</a>
+                        </div>
+                        <div class="discussion-list">
+                            <div class="discussion-item">
+                                <div class="discussion-icon"><i class="fas fa-tractor"></i></div>
+                                <div class="discussion-content">
+                                    <span class="category-badge">Organic Farming</span>
+                                    <h3>Best organic fertilizers for vegetable gardens</h3>
+                                    <p>Share your experiences with different organic fertilizers and which ones gave you the best results for tomatoes, peppers, and leafy greens.</p>
+                                    <div class="discussion-meta">
+                                        <span>By GreenThumbGuru</span>
+                                        <span>2 hours ago</span>
+                                        <div class="reply-count">
+                                            <i class="fas fa-comment"></i>
+                                            <span>52 replies</span>
+                                        </div>
+                                    </div>
+                                    <div class="discussion-stats">
+                                        <div class="stat-item">
+                                            <i class="fas fa-eye"></i>
+                                            <span>1.2k views</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <i class="fas fa-share"></i>
+                                            <span>24 shares</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="discussion-item">
+                                <div class="discussion-icon"><i class="fas fa-dollar-sign"></i></div>
+                                <div class="discussion-content">
+                                    <span class="category-badge">Cost Management</span>
+                                    <h3>How I reduced my farming costs by 40%</h3>
+                                    <p>Practical tips on cutting expenses without compromising on yield quality. From water conservation to bulk purchasing strategies.</p>
+                                    <div class="discussion-meta">
+                                        <span>By BudgetFarmer</span>
+                                        <span>5 hours ago</span>
+                                        <div class="reply-count">
+                                            <i class="fas fa-comment"></i>
+                                            <span>34 replies</span>
+                                        </div>
+                                    </div>
+                                    <div class="discussion-stats">
+                                        <div class="stat-item">
+                                            <i class="fas fa-eye"></i>
+                                            <span>980 views</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <i class="fas fa-share"></i>
+                                            <span>18 shares</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="discussion-item">
+                                <div class="discussion-icon"><i class="fas fa-seedling"></i></div>
+                                <div class="discussion-content">
+                                    <span class="category-badge">Companion Planting</span>
+                                    <h3>Companion planting secrets that actually work</h3>
+                                    <p>Which plant combinations have you found most effective for pest control and improved growth? Let's share our field-tested combinations.</p>
+                                    <div class="discussion-meta">
+                                        <span>By PlantWhisperer</span>
+                                        <span>1 day ago</span>
+                                        <div class="reply-count">
+                                            <i class="fas fa-comment"></i>
+                                            <span>21 replies</span>
+                                        </div>
+                                    </div>
+                                    <div class="discussion-stats">
+                                        <div class="stat-item">
+                                            <i class="fas fa-eye"></i>
+                                            <span>1.5k views</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <i class="fas fa-share"></i>
+                                            <span>32 shares</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="text-align: center; margin-top: 2rem;">
+                            <button id="startDiscussionBtn" class="btn btn-primary">Start New Discussion</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="right-column">
+                    <!-- Trending This Week -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title-container">
+                                <div class="card-header-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <h2 class="card-title">What's Trending This Week</h2>
+                            </div>
+                        </div>
+                        <div class="trending-list">
+                            <div class="trending-item">
+                                <h3>Best drought-resistant crops for dry regions</h3>
+                                <p>Farmers share their experiences with crops that thrive with minimal water in arid conditions.</p>
+                                <a href="#" class="read-more nav-link" data-page="trending">Read More <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                            <div class="trending-item">
+                                <h3>Government subsidies for sustainable farming</h3>
+                                <p>Complete guide to available grants and financial support for eco-friendly agricultural practices.</p>
+                                <a href="#" class="read-more nav-link" data-page="trending">Read More <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                            <div class="trending-item">
+                                <h3>Preparing for monsoon season</h3>
+                                <p>Essential tips on protecting crops and infrastructure ahead of the rainy season.</p>
+                                <a href="#" class="read-more nav-link" data-page="trending">Read More <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Popular Topics -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title-container">
+                                <div class="card-header-icon">
+                                    <i class="fas fa-hashtag"></i>
+                                </div>
+                                <h2 class="card-title">Popular Topics</h2>
+                            </div>
+                        </div>
+                        <div class="topics-grid">
+                            <div class="topic-item nav-link" data-page="news" data-topic="Organic Farming">Organic Farming</div>
+                            <div class="topic-item nav-link" data-page="news" data-topic="Water Management">Water Management</div>
+                            <div class="topic-item nav-link" data-page="news" data-topic="Crop Rotation">Crop Rotation</div>
+                            <div class="topic-item nav-link" data-page="news" data-topic="Soil Health">Soil Health</div>
+                            <div class="topic-item nav-link" data-page="news" data-topic="Pest Control">Pest Control</div>
+                            <div class="topic-item nav-link" data-page="news" data-topic="Market Prices">Market Prices</div>
+                        </div>
+                    </div>
+
+                    <!-- Farmer Tips Exchange -->
+                    <div class="card tips-card">
+                        <div class="card-header">
+                            <div class="card-title-container">
+                                <div class="card-header-icon">
+                                    <i class="fas fa-lightbulb"></i>
+                                </div>
+                                <h2 class="card-title">Farmer Tips Exchange</h2>
+                            </div>
+                        </div>
+                        <div class="tip-item">
+                            <div class="tip-author">
+                                <div class="tip-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <span>@SoilExpert</span>
+                            </div>
+                            <p class="tip-content">Always test your soil pH before planting season. A simple $15 test kit can save you hundreds in failed crops and unnecessary fertilizers.</p>
+                        </div>
+                        <div class="tip-item">
+                            <div class="tip-author">
+                                <div class="tip-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <span>@WaterWise</span>
+                            </div>
+                            <p class="tip-content">Water your plants early in the morning to reduce evaporation loss. Evening watering can promote fungal diseases due to overnight moisture.</p>
+                        </div>
+                        <a href="#" class="see-more nav-link" data-page="tips">See More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Discussions Page -->
+    <div id="discussions-page" class="page-content">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">Community Discussions</h1>
+                <p class="page-description">Join the conversation with fellow farmers. Share your experiences, ask questions, and learn from the community.</p>
+            </div>
+             
+            <div class="discussion-list">
+                <div class="discussion-item">
+                    <div class="discussion-icon"><i class="fas fa-tractor"></i></div>
+                    <div class="discussion-content">
+                        <span class="category-badge">Organic Farming</span>
+                        <h3>Best organic fertilizers for vegetable gardens</h3>
+                        <p>Share your experiences with different organic fertilizers and which ones gave you the best results for tomatoes, peppers, and leafy greens.</p>
+                        <div class="discussion-meta">
+                            <span>By GreenThumbGuru</span>
+                            <span>2 hours ago</span>
+                            <div class="reply-count">
+                                <i class="fas fa-comment"></i>
+                                <span>52 replies</span>
+                            </div>
+                        </div>
+                        <div class="discussion-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-eye"></i>
+                                <span>1.2k views</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-share"></i>
+                                <span>24 shares</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="discussion-item">
+                    <div class="discussion-icon"><i class="fas fa-dollar-sign"></i></div>
+                    <div class="discussion-content">
+                        <span class="category-badge">Cost Management</span>
+                        <h3>How I reduced my farming costs by 40%</h3>
+                        <p>Practical tips on cutting expenses without compromising on yield quality. From water conservation to bulk purchasing strategies.</p>
+                        <div class="discussion-meta">
+                            <span>By BudgetFarmer</span>
+                            <span>5 hours ago</span>
+                            <div class="reply-count">
+                                <i class="fas fa-comment"></i>
+                                <span>34 replies</span>
+                            </div>
+                        </div>
+                        <div class="discussion-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-eye"></i>
+                                <span>980 views</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-share"></i>
+                                <span>18 shares</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="discussion-item">
+                    <div class="discussion-icon"><i class="fas fa-seedling"></i></div>
+                    <div class="discussion-content">
+                        <span class="category-badge">Companion Planting</span>
+                        <h3>Companion planting secrets that actually work</h3>
+                        <p>Which plant combinations have you found most effective for pest control and improved growth? Let's share our field-tested combinations.</p>
+                        <div class="discussion-meta">
+                            <span>By PlantWhisperer</span>
+                            <span>1 day ago</span>
+                            <div class="reply-count">
+                                <i class="fas fa-comment"></i>
+                                <span>21 replies</span>
+                            </div>
+                        </div>
+                        <div class="discussion-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-eye"></i>
+                                <span>1.5k views</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-share"></i>
+                                <span>32 shares</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             
+            <div style="text-align: center; margin-top: 2rem;">
+                <button id="startDiscussionBtn2" class="btn btn-primary">Start New Discussion</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trending Page -->
+    <div id="trending-page" class="page-content">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">Trending Articles</h1>
+                <p class="page-description">Discover the most popular articles and discussions in the farming community this week.</p>
+            </div>
+             
+            <div class="articles-grid">
+                <div class="article-card">
+                    <div class="article-image" style="background-image: url('https://shorturl.at/2lrH2');">
+                        <div class="image-placeholder">Drought Resistant Crops</div>
+                    </div>
+                    <div class="article-content">
+                        <h3>Best drought-resistant crops for dry regions</h3>
+                        <p>Farmers share their experiences with crops that thrive with minimal water in arid conditions. Learn which varieties work best and how to maximize yield.</p>
+                        <div class="article-meta">
+                            <span>By WaterWise Farmer</span>
+                            <span>May 20, 2023</span>
+                        </div>
+                        <a href="https://modernfarmer.com/2025/08/best-dry-farming-crops/" class="read-more" target="_blank">Read Full Article <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="article-card">
+                    <div class="article-image" style="background-image: url('https://greensiri.in/wp-content/uploads/2025/06/young-indian-agronomist-giving-liquid-fertilizer-bottle-farmer-showing-product-information-laptop-green-agriculture-field.jpg');">
+                        <div class="image-placeholder">Government Subsidies</div>
+                    </div>
+                    <div class="article-content">
+                        <h3>Government subsidies for sustainable farming</h3>
+                        <p>Complete guide to available grants and financial support for eco-friendly agricultural practices. Find out how to apply and maximize your benefits.</p>
+                        <div class="article-meta">
+                            <span>By AgriPolicy Expert</span>
+                            <span>May 18, 2023</span>
+                        </div>
+                        <a href="https://greensiri.in/government-schemes-supporting-sustainable-agriculture-in-india/" class="read-more" target="_blank">Read Full Article <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="article-card">
+                    <div class="article-image" style="background-image: url('https://jcblagri.in/x_images/blog_pics/1689144421Agricultural-Implements-to-Prepare-Fields-for-Monsoon-Crops-_11zon.jpg');">
+                        <div class="image-placeholder">Monsoon Preparation</div>
+                    </div>
+                    <div class="article-content">
+                        <h3>Preparing for monsoon season</h3>
+                        <p>Essential tips on protecting crops and infrastructure ahead of the rainy season. Learn drainage techniques and crop protection strategies.</p>
+                        <div class="article-meta">
+                            <span>By Seasoned Grower</span>
+                            <span>May 15, 2023</span>
+                        </div>
+                        <a href="https://jcblagri.in/blogs/agricultural-implements-to-prepare-fields-for-monsoon-crops" class="read-more" target="_blank">Read Full Article <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="article-card">
+                    <div class="article-image" style="background-image: url('https://cdn.odrisystems.com/wp-content/uploads/2024/07/06150256/Vertical-Farming-of-Tomatoes-1000x600-1.webp');">
+                        <div class="image-placeholder">Vertical Farming</div>
+                    </div>
+                    <div class="article-content">
+                        <h3>Innovations in vertical farming</h3>
+                        <p>How urban farmers are maximizing space and resources with vertical farming techniques. Case studies and implementation guides.</p>
+                        <div class="article-meta">
+                            <span>By Urban Agri Expert</span>
+                            <span>May 12, 2023</span>
+                        </div>
+                        <a href="https://agrinextcon.com/10-innovations-in-global-vertical-farming/" class="read-more" target="_blank">Read Full Article <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="article-card">
+                    <div class="article-image" style="background-image: url('https://tse2.mm.bing.net/th/id/OIP.9U1OlIAr9SRJE5jJGi6GBgHaDR?pid=Api&P=0&h=180');">
+                        <div class="image-placeholder">AI in Agriculture</div>
+                    </div>
+                    <div class="article-content">
+                        <h3>AI in agriculture: The future is now</h3>
+                        <p>How artificial intelligence is revolutionizing crop monitoring, yield prediction, and resource management in modern farming.</p>
+                        <div class="article-meta">
+                            <span>By Tech Farmer</span>
+                            <span>May 10, 2023</span>
+                        </div>
+                        <a href="https://www.geeksforgeeks.org/artificial-intelligence/ai-in-agriculture-future-of-farming/" class="read-more" target="_blank">Read Full Article <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="article-card">
+                    <div class="article-image" style="background-image: url('https://vietnamcirculareconomy.vn/wp-content/uploads/2023/12/DALL%C2%B7E-2023-12-07-16.19.10-A-square-image-representing-Criteria-for-Evaluating-Circular-Economy-in-Agriculture.-The-image-depicts-a-harmonious-blend-of-agricultural-activities.png');">
+                        <div class="image-placeholder">Circular Economy</div>
+                    </div>
+                    <div class="article-content">
+                        <h3>Circular economy in agriculture</h3>
+                        <p>How farmers are creating closed-loop systems that minimize waste and maximize resource efficiency for sustainable operations.</p>
+                        <div class="article-meta">
+                            <span>By Sustainability Advocate</span>
+                            <span>May 8, 2023</span>
+                        </div>
+                        <a href="https://www.sciencedirect.com/science/article/abs/pii/S0921344921002275" class="read-more" target="_blank">Read Full Article <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tips Page -->
+    <div id="tips-page" class="page-content">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">Farmer Tips Exchange</h1>
+                <p class="page-description">Share your farming wisdom and learn from experienced growers. Practical tips for better yields and sustainable practices.</p>
+            </div>
+             
+            <div class="tips-list">
+                <div class="tip-card">
+                    <div class="tip-header">
+                        <div class="tip-avatar-large">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="tip-author-info">
+                            <h4>@SoilExpert</h4>
+                            <p>Agricultural Scientist</p>
+                        </div>
+                    </div>
+                    <div class="tip-content">
+                        <p>Always test your soil pH before planting season. A simple $15 test kit can save you hundreds in failed crops and unnecessary fertilizers. Most vegetables prefer a pH between 6.0 and 7.0. If your soil is too acidic, add lime; if it's too alkaline, add sulfur.</p>
+                    </div>
+                    <div class="tip-actions">
+                        <div class="tip-date">Posted 2 days ago</div>
+                        <div class="tip-likes">
+                            <button class="like-btn"><i class="fas fa-heart"></i> <span>42</span></button>
+                        </div>
+                    </div>
+                </div>
+                 
+                <div class="tip-card">
+                    <div class="tip-header">
+                        <div class="tip-avatar-large">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="tip-author-info">
+                            <h4>@WaterWise</h4>
+                            <p>Irrigation Specialist</p>
+                        </div>
+                    </div>
+                    <div class="tip-content">
+                        <p>Water your plants early in the morning to reduce evaporation loss. Evening watering can promote fungal diseases due to overnight moisture. For most crops, deep, infrequent watering is better than frequent shallow watering as it encourages deeper root growth.</p>
+                    </div>
+                    <div class="tip-actions">
+                        <div class="tip-date">Posted 5 days ago</div>
+                        <div class="tip-likes">
+                            <button class="like-btn"><i class="fas fa-heart"></i> <span>38</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             
+            <div style="text-align: center; margin-top: 2rem;">
+                <button id="addTipBtn" class="btn btn-primary">Add Your Tip</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- News Page -->
+    <div id="news-page" class="page-content">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">Agricultural News</h1>
+                <p class="page-description">Stay updated with the latest developments in agriculture, market trends, and government policies affecting farmers.</p>
+            </div>
+             
+            <div class="news-filters">
+                <button class="filter-btn active" data-filter="all">All Topics</button>
+                <button class="filter-btn" data-filter="Organic Farming">Organic Farming</button>
+                <button class="filter-btn" data-filter="Water Management">Water Management</button>
+                <button class="filter-btn" data-filter="Crop Rotation">Crop Rotation</button>
+                <button class="filter-btn" data-filter="Soil Health">Soil Health</button>
+                <button class="filter-btn" data-filter="Pest Control">Pest Control</button>
+                <button class="filter-btn" data-filter="Market Prices">Market Prices</button>
+            </div>
+             
+            <div class="articles-grid">
+                <div class="article-card" data-topic="Organic Farming">
+                    <div class="article-image" style="background-image: url('https://tse3.mm.bing.net/th/id/OIP.nJTBPhEqLbsN4sDhfOyKzgHaHa?pid=Api&P=0&h=180');"></div>
+                    <div class="article-content">
+                        <h3>New Organic Certification Standards Announced</h3>
+                        <p>The Department of Agriculture has released updated standards for organic certification, making it easier for small farmers to qualify while maintaining product integrity.</p>
+                        <div class="article-meta">
+                            <span>By AgriPolicy Watch</span>
+                            <span>May 22, 2023</span>
+                        </div>
+                        <a href="https://www.summarise.app/news/certification-alert-fssais-new-organic-rules-could-impact-your-products#:~:text=The%20Food%20Safety%20and%20Standards%20Authority%20of%20India,will%20cover%20organic%20agricultural%20products%20and%20certification%20processes." class="read-more" target="_blank">Read Full Story <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="article-card" data-topic="Water Management">
+                    <div class="article-image" style="background-image: url('https://www.sattva.co.in/wp-content/uploads/2024/06/Banner-2-Option-1-1536x1024.jpg');"></div>
+                    <div class="article-content">
+                        <h3>Innovative Drip Irrigation Systems Saving Water</h3>
+                        <p>Farmers adopting new precision irrigation technologies report 30-50% water savings while maintaining or improving crop yields in various regions.</p>
+                        <div class="article-meta">
+                            <span>By Water Resources Journal</span>
+                            <span>May 19, 2023</span>
+                        </div>
+                        <a href="https://www.sattva.co.in/ski/innovative-irrigation-success-stories-in-water-resilient-agriculture/" class="read-more" target="_blank">Read Full Story <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="article-card" data-topic="Market Prices">
+                    <div class="article-image" style="background-image: url('https://thumbs.dreamstime.com/z/rise-wheat-prices-diagram-field-shot-extensive-fields-countryside-graph-going-up-284480225.jpg');"></div>
+                    <div class="article-content">
+                        <h3>Wheat Prices Reach 5-Year High Amid Global Shortages</h3>
+                        <p>Global wheat supplies tighten due to production issues in key exporting countries, driving prices upward and creating opportunities for local growers.</p>
+                        <div class="article-meta">
+                            <span>By Market Analyst</span>
+                            <span>May 17, 2023</span>
+                        </div>
+                        <a href="https://essfeed.com/global-wheat-shortage-in-2025-causes-impacts-and-future-outlook/#:~:text=The%20world%20is%20facing%20a%20complex%20and%20disruptive,events%2C%20export%20restrictions%2C%20geopolitical%20instability%2C%20and%20pricing%20dynamics." class="read-more" target="_blank">Read Full Story <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="article-card" data-topic="Soil Health">
+                    <div class="article-image" style="background-image: url('https://images.unsplash.com/photo-1615558318390-cd15a55b27b3');"></div>
+                    <div class="article-content">
+                        <h3>Cover Cropping Gains Popularity for Soil Regeneration</h3>
+                        <p>More farmers are turning to cover crops during off-seasons to improve soil health, reduce erosion, and enhance water retention capabilities.</p>
+                        <div class="article-meta">
+                            <span>By Soil Science Review</span>
+                            <span>May 14, 2023</span>
+                        </div>
+                        <a href="https://diversedaily.com/cover-crops-and-soil-regeneration-enriching-soil-fertility-and-preventing-erosion-between-farming-seasons/#:~:text=Cover%20crops%2C%20an%20integral%20component%20of%20sustainable%20agricultural,cover%20crops%20is%20the%20improvement%20of%20soil%20structure." class="read-more" target="_blank">Read Full Story <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="article-card" data-topic="Pest Control">
+                    <div class="article-image" style="background-image: url('https://www.pestwerkz.com.sg/assets/post-image/880427457-14.-The-Role-of-Biological-Control-in-Modern-Pest-Management-800-x-500px.png');"></div>
+                    <div class="article-content">
+                        <h3>Biological Pest Control Methods Show Promise</h3>
+                        <p>Research indicates that introducing beneficial insects can reduce pesticide use by up to 70% while effectively controlling common crop pests.</p>
+                        <div class="article-meta">
+                            <span>By Integrated Pest Management</span>
+                            <span>May 12, 2023</span>
+                        </div>
+                        <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4553570/" class="read-more" target="_blank">Read Full Story <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="article-card" data-topic="Crop Rotation">
+                    <div class="article-image" style="background-image: url('https://tractorkarvan.com/storage/images/Blogs/Crop/Crop-Rotation-Blog__1_.jpg');"></div>
+                    <div class="article-content">
+                        <h3>Study Confirms Benefits of Diverse Crop Rotations</h3>
+                        <p>Long-term research demonstrates that diversified crop rotations improve soil health, reduce pest pressure, and increase overall farm profitability.</p>
+                        <div class="article-meta">
+                            <span>By Agricultural Research</span>
+                            <span>May 10, 2023</span>
+                        </div>
+                        <a href="https://www.nature.com/articles/s41467-023-44464-9" class="read-more" target="_blank">Read Full Story <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="article-card" data-topic="Organic Farming">
+                    <div class="article-image" style="background-image: url('https://organicagrifarm.com/wp-content/uploads/2024/12/image-18-1024x585.jpeg');"></div>
+                    <div class="article-content">
+                        <h3>Organic Farming Certification Applications Increase by 25%</h3>
+                        <p>More farmers are transitioning to organic methods as consumer demand for sustainably grown produce continues to rise across the country.</p>
+                        <div class="article-meta">
+                            <span>By Organic Trends Magazine</span>
+                            <span>May 8, 2023</span>
+                        </div>
+                        <a href="https://farmonaut.com/asia/organic-farming-trends-in-india-2025-8-game-changers" class="read-more" target="_blank">Read Full Story <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="article-card" data-topic="Water Management">
+                    <div class="article-image" style="background-image: url('https://www.wateraid.org/in/sites/g/files/jkxoof336/files/styles/full_grid_image_2x/public/water-scarcity.webp?itok=7Flr4pCe');"></div>
+                    <div class="article-content">
+                        <h3>New Water Harvesting Techniques Prove Effective</h3>
+                        <p>Innovative rainwater collection and storage systems are helping farmers in drought-prone regions maintain crop production during dry spells.</p>
+                        <div class="article-meta">
+                            <span>By Water Conservation Digest</span>
+                            <span>May 5, 2023</span>
+                        </div>
+                        <a href="https://www.wateraid.org/in/blog/the-power-of-water-harvesting-real-life-success-stories-of-community-led-water-conservation" class="read-more" target="_blank">Read Full Story <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Start Discussion Modal -->
+    <div id="discussionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Start New Discussion</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="discussionForm">
+                <div class="form-group">
+                    <label for="discussionTitle">Discussion Title</label>
+                    <input type="text" id="discussionTitle" placeholder="Enter a clear, descriptive title" required>
+                </div>
+                <div class="form-group">
+                    <label for="discussionCategory">Category</label>
+                    <select id="discussionCategory" required>
+                        <option value="">Select a category</option>
+                        <option value="Organic Farming">Organic Farming</option>
+                        <option value="Water Management">Water Management</option>
+                        <option value="Crop Rotation">Crop Rotation</option>
+                        <option value="Soil Health">Soil Health</option>
+                        <option value="Pest Control">Pest Control</option>
+                        <option value="Market Prices">Market Prices</option>
+                        <option value="Equipment">Equipment</option>
+                        <option value="Government Schemes">Government Schemes</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="discussionContent">Discussion Content</label>
+                    <textarea id="discussionContent" placeholder="Describe your question, experience, or topic you'd like to discuss..." required></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="close-modal btn" style="background: #e0e0e0;">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Post Discussion</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Tip Modal -->
+    <div id="tipModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Share Your Farming Tip</h3>
+                <button class="close-tip-modal">&times;</button>
+            </div>
+            <form id="tipForm">
+                <div class="form-group">
+                    <label for="tipTitle">Tip Title</label>
+                    <input type="text" id="tipTitle" placeholder="Give your tip a descriptive title" required>
+                </div>
+                <div class="form-group">
+                    <label for="tipCategory">Category</label>
+                    <select id="tipCategory" required>
+                        <option value="">Select a category</option>
+                        <option value="Soil Management">Soil Management</option>
+                        <option value="Water Conservation">Water Conservation</option>
+                        <option value="Pest Control">Pest Control</option>
+                        <option value="Crop Management">Crop Management</option>
+                        <option value="Equipment">Equipment</option>
+                        <option value="Cost Saving">Cost Saving</option>
+                        <option value="Sustainability">Sustainability</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tipContent">Your Tip</label>
+                    <textarea id="tipContent" placeholder="Share your farming wisdom and practical advice..." required></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="close-tip-modal btn" style="background: #e0e0e0;">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Share Tip</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-seedling footer-logo"></i> FarmConnect</h3>
+                    <p>Connecting farmers for knowledge sharing, problem solving, and agricultural growth.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> About Us : Members</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Jess Annet A</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Janice Lydia Pradyutha</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Harrick Christo JP</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; HACK-AI-THON 2.0 | Team GenZ Coderz | Farmer's Disease Diagnostic Portal
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Page Navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = link.getAttribute('data-page');
+                
+                // Update active nav link
+                document.querySelectorAll('.nav-link').forEach(nav => {
+                    nav.classList.remove('active');
+                });
+                link.classList.add('active');
+                
+                // Show selected page
+                document.querySelectorAll('.page-content').forEach(pageEl => {
+                    pageEl.classList.remove('active');
+                });
+                document.getElementById(`${page}-page`).classList.add('active');
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+            });
+        });
+
+        // Notification function
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notification-text');
+            
+            notificationText.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Like functionality
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.like-btn')) {
+                const likeBtn = e.target.closest('.like-btn');
+                const likesCount = likeBtn.querySelector('span');
+                
+                if (likeBtn.classList.contains('liked')) {
+                    likeBtn.classList.remove('liked');
+                    likesCount.textContent = parseInt(likesCount.textContent) - 1;
+                } else {
+                    likeBtn.classList.add('liked');
+                    likesCount.textContent = parseInt(likesCount.textContent) + 1;
+                    showNotification('Thanks for your support!');
+                }
+            }
+        });
+
+        // Discussion Modal functionality
+        const discussionModal = document.getElementById('discussionModal');
+        const startDiscussionBtns = document.querySelectorAll('#startDiscussionBtn, #startDiscussionBtn2');
+        const closeModalBtns = document.querySelectorAll('.close-modal');
+        const discussionForm = document.getElementById('discussionForm');
+
+        // Open modal
+        startDiscussionBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                discussionModal.style.display = 'flex';
+            });
+        });
+
+        // Close modal
+        closeModalBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                discussionModal.style.display = 'none';
+            });
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === discussionModal) {
+                discussionModal.style.display = 'none';
+            }
+        });
+
+        // Handle form submission
+        discussionForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const title = document.getElementById('discussionTitle').value;
+            const category = document.getElementById('discussionCategory').value;
+            const content = document.getElementById('discussionContent').value;
+            
+            // Create new discussion item
+            const discussionList = document.querySelector('.discussion-list');
+            const newDiscussion = document.createElement('div');
+            newDiscussion.className = 'discussion-item';
+            newDiscussion.innerHTML = `
+                <div class="discussion-icon"><i class="fas fa-comments"></i></div>
+                <div class="discussion-content">
+                    <span class="category-badge">${category}</span>
+                    <h3>${title}</h3>
+                    <p>${content}</p>
+                    <div class="discussion-meta">
+                        <span>By You</span>
+                        <span>Just now</span>
+                        <div class="reply-count">
+                            <i class="fas fa-comment"></i>
+                            <span>0 replies</span>
+                        </div>
+                    </div>
+                    <div class="discussion-stats">
+                        <div class="stat-item">
+                            <i class="fas fa-eye"></i>
+                            <span>0 views</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-share"></i>
+                            <span>0 shares</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Add to the top of the list
+            discussionList.insertBefore(newDiscussion, discussionList.firstChild);
+            
+            // Close modal and reset form
+            discussionModal.style.display = 'none';
+            discussionForm.reset();
+            
+            // Show success message
+            showNotification('Your discussion has been posted successfully!');
+        });
+
+        // Tip Modal functionality
+        const tipModal = document.getElementById('tipModal');
+        const addTipBtn = document.getElementById('addTipBtn');
+        const closeTipModalBtns = document.querySelectorAll('.close-tip-modal');
+        const tipForm = document.getElementById('tipForm');
+
+        // Open modal
+        addTipBtn.addEventListener('click', () => {
+            tipModal.style.display = 'flex';
+        });
+
+        // Close modal
+        closeTipModalBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tipModal.style.display = 'none';
+            });
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === tipModal) {
+                tipModal.style.display = 'none';
+            }
+        });
+
+        // Handle tip form submission
+        tipForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const title = document.getElementById('tipTitle').value;
+            const category = document.getElementById('tipCategory').value;
+            const content = document.getElementById('tipContent').value;
+            
+            // Create new tip item
+            const tipsList = document.querySelector('.tips-list');
+            const newTip = document.createElement('div');
+            newTip.className = 'tip-card';
+            newTip.innerHTML = `
+                <div class="tip-header">
+                    <div class="tip-avatar-large">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="tip-author-info">
+                        <h4>@You</h4>
+                        <p>Community Member</p>
+                    </div>
+                </div>
+                <div class="tip-content">
+                    <p><strong>${title}</strong> - ${content}</p>
+                </div>
+                <div class="tip-actions">
+                    <div class="tip-date">Posted just now</div>
+                    <div class="tip-likes">
+                        <button class="like-btn"><i class="fas fa-heart"></i> <span>0</span></button>
+                    </div>
+                </div>
+            `;
+            
+            // Add to the top of the list
+            tipsList.insertBefore(newTip, tipsList.firstChild);
+            
+            // Close modal and reset form
+            tipModal.style.display = 'none';
+            tipForm.reset();
+            
+            // Show success message
+            showNotification('Your tip has been shared successfully!');
+        });
+
+        // Search functionality
+        const searchInput = document.querySelector('.search-bar input');
+        const searchButton = document.querySelector('.search-bar button');
+        
+        searchButton.addEventListener('click', performSearch);
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        function performSearch() {
+            const query = searchInput.value.trim();
+            if (query !== '') {
+                showNotification(`Searching for: "${query}"`);
+                // In a real application, you would perform the search here
+            }
+        }
+
+        // News filtering
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Update active filter
+                document.querySelectorAll('.filter-btn').forEach(b => {
+                    b.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                const filter = this.getAttribute('data-filter');
+                const articles = document.querySelectorAll('.article-card');
+                
+                articles.forEach(article => {
+                    if (filter === 'all' || article.getAttribute('data-topic') === filter) {
+                        article.style.display = 'block';
+                    } else {
+                        article.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Topic navigation
+        document.querySelectorAll('.topic-item').forEach(topic => {
+            topic.addEventListener('click', function() {
+                const page = this.getAttribute('data-page');
+                const topicName = this.getAttribute('data-topic');
+                
+                // Navigate to news page
+                document.querySelectorAll('.nav-link').forEach(nav => {
+                    nav.classList.remove('active');
+                });
+                document.querySelector(`.nav-link[data-page="${page}"]`).classList.add('active');
+                
+                document.querySelectorAll('.page-content').forEach(pageEl => {
+                    pageEl.classList.remove('active');
+                });
+                document.getElementById(`${page}-page`).classList.add('active');
+                
+                // Activate the corresponding filter
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.getAttribute('data-filter') === topicName) {
+                        btn.classList.add('active');
+                    }
+                });
+                
+                // Filter articles
+                const articles = document.querySelectorAll('.article-card');
+                articles.forEach(article => {
+                    if (article.getAttribute('data-topic') === topicName) {
+                        article.style.display = 'block';
+                    } else {
+                        article.style.display = 'none';
+                    }
+                });
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+            });
+        });
+    </script>
+</body>
+</html>
