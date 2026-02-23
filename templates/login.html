@@ -15,7 +15,10 @@
 
         body {
             font-family: 'Roboto', sans-serif;
-            background: linear-gradient(to bottom, #F5F5F5, #E8F5E9);
+            background: url("/static/background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             color: #2E2E2E;
             min-height: 100vh;
             display: flex;
@@ -684,13 +687,30 @@
         }
     </style>
 </head>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCzFnTqBmI8BJA9j15BZ5K5cYOc84q-pLk",
+    authDomain: "demeter-web-baea5.firebaseapp.com",
+    projectId: "demeter-web-baea5",
+    storageBucket: "demeter-web-baea5.firebasestorage.app",
+    messagingSenderId: "240320842218",
+    appId: "1:240320842218:web:d3a2e902fdc8d0d3a30a93",
+    measurementId: "G-5968Q3SDZS"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+</script>
 <body>
     <!-- Google Translate Widget -->
     <div id="google_translate_element"></div>
     
     <div class="container">
         <div class="header">
-            <h1><i class="fas fa-seedling"></i> AgroCare</h1>
+            <h1><i class="fas fa-seedling"></i> DEMETER</h1>
             <p>Plant Disease Diagnostics & Agricultural Support</p>
         </div>
         
@@ -1168,7 +1188,7 @@
         </div>
         
         <div class="footer">
-            <p>HACK-AI-THON 2.0 | Team GenZ Coderz | Farmer's Disease Diagnostic Portal</p>
+            <p>Team Insight Forge | Farmer's Disease Diagnostic Portal</p>
         </div>
     </div>
 
