@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farmer Portal | Dashboard</title>
+    <title>DEMETER | Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -15,7 +15,10 @@
 
         body {
             font-family: 'Roboto', sans-serif;
-            background: linear-gradient(to bottom, #F5F5F5, #E8F5E9);
+            background: url("/static/background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             color: #2E2E2E;
             min-height: 100vh;
             line-height: 1.6;
@@ -25,7 +28,7 @@
         /* Sidebar Navigation */
         .sidebar {
             width: 250px;
-            background-color: #4CAF50;
+            background-color: #2d832f;
             color: white;
             height: 100vh;
             position: fixed;
@@ -94,7 +97,7 @@
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
             font-size: 1.8rem;
-            color: #4CAF50;
+            color: #2d832f;
         }
 
         .user-info {
@@ -230,7 +233,7 @@
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
             font-size: 1.3rem;
-            color: #2E2E2E;
+            color: #000000;
         }
 
         .feature-desc {
@@ -570,6 +573,78 @@
             display: block;
         }
 
+        /* History Modal Styles */
+        .history-item {
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: #F5F5F5;
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+            position: relative;
+        }
+
+        .history-item h4 {
+            color: #2d832f;
+            margin-bottom: 10px;
+        }
+
+        .history-item .history-time {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .history-item .history-content {
+            margin-bottom: 10px;
+        }
+
+        .history-item .history-type {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .history-type.fertilizer {
+            background-color: #2196F3;
+        }
+
+        .history-type.pesticide {
+            background-color: #FF9800;
+        }
+
+        .history-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .history-actions button {
+            padding: 5px 10px;
+            font-size: 0.9rem;
+        }
+
+        .clear-history-btn {
+            margin-bottom: 20px;
+            background-color: #f44336;
+            color: white;
+        }
+
+        .clear-history-btn:hover {
+            background-color: #d32f2f;
+        }
+
+        /* Quick Actions heading style */
+        .quick-actions-heading {
+            margin: 30px 0 20px;
+            font-family: 'Poppins', sans-serif;
+            color: #000000;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .sidebar {
@@ -635,7 +710,7 @@
     <!-- Sidebar Navigation -->
     <div class="sidebar">
         <div class="logo">
-            <h1><i class="fas fa-seedling"></i> <span data-i18n="portal-name">Farmer Portal</span></h1>
+            <h1><i class="fas fa-seedling"></i> <span data-i18n="portal-name">DEMETER</span></h1>
         </div>
         <ul class="nav-menu">
             <li class="nav-item active" data-page="home">
@@ -645,6 +720,10 @@
             <li class="nav-item" data-page="disease">
                 <i class="fas fa-heartbeat"></i>
                 <span data-i18n="heal-crops">Heal Your Crops</span>
+            </li>
+            <li class="nav-item" data-page="history" id="historyNavItem">
+                <i class="fas fa-history"></i>
+                <span data-i18n="history">History</span>
             </li>
             <li class="nav-item" data-page="community">
                 <i class="fas fa-users"></i>
@@ -702,7 +781,7 @@
                 </div>
             </div>
 
-            <h2 style="margin: 30px 0 20px; font-family: 'Poppins', sans-serif; color: #4CAF50;" data-i18n="quick-actions">Quick Actions</h2>
+            <h2 class="quick-actions-heading" data-i18n="quick-actions">Quick Actions</h2>
             
             <div class="features">
                 <!-- Fertilizer Calculator Card -->
@@ -1022,6 +1101,19 @@
         </div>
     </div>
 
+    <!-- History Modal -->
+    <div class="modal" id="historyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" data-i18n="history-title">Calculation History</h2>
+                <button class="close-modal" id="closeHistoryModal">&times;</button>
+            </div>
+            <div id="historyContent">
+                <!-- History items will be loaded here -->
+            </div>
+        </div>
+    </div>
+
     <!-- Video Modal -->
     <div class="modal" id="videoModal">
         <div class="modal-content">
@@ -1038,9 +1130,10 @@
         const translations = {
             en: {
                 // Navigation
-                'portal-name': 'Farmer Portal',
+                'portal-name': 'DEMETER',
                 'your-crops': 'Your Crops',
                 'heal-crops': 'Heal Your Crops',
+                'history': 'History',
                 'community': 'Community',
                 'market': 'Market',
                 'profile': 'You',
@@ -1121,12 +1214,22 @@
                 'unavailable-market-title': 'Marketplace',
                 'unavailable-market-text': 'The marketplace feature is currently under development. Soon you\'ll be able to buy and sell agricultural products directly.',
                 'unavailable-profile-title': 'Profile Section',
-                'unavailable-profile-text': 'The profile management feature is currently unavailable. We\'re building a comprehensive profile system for farmers.'
+                'unavailable-profile-text': 'The profile management feature is currently unavailable. We\'re building a comprehensive profile system for farmers.',
+                
+                // History
+                'history-title': 'Calculation History',
+                'no-history': 'No calculation history yet. Use the calculators to see your history here.',
+                'clear-history': 'Clear History',
+                'fertilizer-calculation': 'Fertilizer Calculation',
+                'pesticide-calculation': 'Pesticide Calculation',
+                'apply-again': 'Apply Again',
+                'delete': 'Delete'
             },
             hi: {
                 'portal-name': 'किसान पोर्टल',
                 'your-crops': 'आपकी फसलें',
                 'heal-crops': 'अपनी फसलों को ठीक करें',
+                'history': 'इतिहास',
                 'community': 'समुदाय',
                 'market': 'बाजार',
                 'profile': 'आप',
@@ -1191,12 +1294,22 @@
                 'unavailable-market-title': 'मार्केटप्लेस',
                 'unavailable-market-text': 'मार्केटप्लेस सुविधा वर्तमान में विकास के अधीन है। जल्द ही आप सीधे कृषि उत्पाद खरीद और बेच सकेंगे।',
                 'unavailable-profile-title': 'प्रोफाइल सेक्शन',
-                'unavailable-profile-text': 'प्रोफाइल प्रबंधन सुविधा वर्तमान में अनुपलब्ध है। हम किसानों के लिए एक व्यापक प्रोफाइल सिस्टम बना रहे हैं।'
+                'unavailable-profile-text': 'प्रोफाइल प्रबंधन सुविधा वर्तमान में अनुपलब्ध है। हम किसानों के लिए एक व्यापक प्रोफाइल सिस्टम बना रहे हैं।',
+                
+                // History
+                'history-title': 'गणना इतिहास',
+                'no-history': 'अभी तक कोई गणना इतिहास नहीं है। अपना इतिहास देखने के लिए कैलकुलेटर का उपयोग करें।',
+                'clear-history': 'इतिहास साफ़ करें',
+                'fertilizer-calculation': 'उर्वरक गणना',
+                'pesticide-calculation': 'कीटनाशक गणना',
+                'apply-again': 'फिर से लागू करें',
+                'delete': 'हटाएं'
             },
             ta: {
                 'portal-name': 'விவசாயி போர்டல்',
                 'your-crops': 'உங்கள் பயிர்கள்',
                 'heal-crops': 'உங்கள் பயிர்களை குணப்படுத்துங்கள்',
+                'history': 'வரலாறு',
                 'community': 'சமூகம்',
                 'market': 'சந்தை',
                 'profile': 'நீங்கள்',
@@ -1261,12 +1374,22 @@
                 'unavailable-market-title': 'சந்தை',
                 'unavailable-market-text': 'சந்தை அம்சம் தற்போது உருவாக்கத்தில் உள்ளது. விரைவில் நீங்கள் விவசாய பொருட்களை நேரடியாக வாங்கவும் விற்கவும் முடியும்.',
                 'unavailable-profile-title': 'சுயவிவர பகுதி',
-                'unavailable-profile-text': 'சுயவிவர மேலாண்மை அம்சம் தற்போது கிடைக்கவில்லை. விவசாயிகளுக்கான ஒரு விரிவான சுயவிவர அமைப்பை நாங்கள் உருவாக்குகிறோம்.'
+                'unavailable-profile-text': 'சுயவிவர மேலாண்மை அம்சம் தற்போது கிடைக்கவில்லை. விவசாயிகளுக்கான ஒரு விரிவான சுயவிவர அமைப்பை நாங்கள் உருவாக்குகிறோம்.',
+                
+                // History
+                'history-title': 'கணக்கீடு வரலாறு',
+                'no-history': 'இதுவரை கணக்கீடு வரலாறு இல்லை. உங்கள் வரலாற்றை இங்கே காண கால்குலேட்டர்களைப் பயன்படுத்தவும்.',
+                'clear-history': 'வரலாற்றை அழி',
+                'fertilizer-calculation': 'உர கணக்கீடு',
+                'pesticide-calculation': 'பூச்சிக்கொல்லி கணக்கீடு',
+                'apply-again': 'மீண்டும் பயன்படுத்து',
+                'delete': 'நீக்கு'
             },
             ml: {
                 'portal-name': 'കർഷക പോർട്ടൽ',
                 'your-crops': 'നിങ്ങളുടെ വിളകൾ',
                 'heal-crops': 'നിങ്ങളുടെ വിളകൾ സുഖപ്പെടുത്തുക',
+                'history': 'ചരിത്രം',
                 'community': 'കമ്മ്യൂണിറ്റി',
                 'market': 'മാർക്കറ്റ്',
                 'profile': 'നിങ്ങൾ',
@@ -1331,7 +1454,16 @@
                 'unavailable-market-title': 'മാർക്കറ്റ്പ്ലേസ്',
                 'unavailable-market-text': 'മാർക്കറ്റ്പ്ലേസ് സവിശേഷത നിലവിൽ വികസനത്തിലാണ്. ഉടൻ തന്നെ നിങ്ങൾക്ക് കാർഷിക ഉൽപ്പന്നങ്ങൾ നേരിട്ട് വാങ്ങാനും വിൽക്കാനും കഴിയും.',
                 'unavailable-profile-title': 'പ്രൊഫൈൽ വിഭാഗം',
-                'unavailable-profile-text': 'പ്രൊഫൈൽ മാനേജ്മെന്റ് സവിശേഷത നിലവിൽ ലഭ്യമല്ല. കർഷകർക്കായി ഒരു സമഗ്ര പ്രൊഫൈൽ സിസ്റ്റം ഞങ്ങൾ നിർമ്മിക്കുന്നു.'
+                'unavailable-profile-text': 'പ്രൊഫൈൽ മാനേജ്മെന്റ് സവിശേഷത നിലവിൽ ലഭ്യമല്ല. കർഷകർക്കായി ഒരു സമഗ്ര പ്രൊഫൈൽ സിസ്റ്റം ഞങ്ങൾ നിർമ്മിക്കുന്നു.',
+                
+                // History
+                'history-title': 'കണക്കുകൂട്ടൽ ചരിത്രം',
+                'no-history': 'ഇതുവരെ കണക്കുകൂട്ടൽ ചരിത്രമില്ല. നിങ്ങളുടെ ചരിത്രം ഇവിടെ കാണാൻ കാൽക്കുലേറ്ററുകൾ ഉപയോഗിക്കുക.',
+                'clear-history': 'ചരിത്രം മായ്‌ക്കുക',
+                'fertilizer-calculation': 'വളം കണക്കുകൂട്ടൽ',
+                'pesticide-calculation': 'കീടനാശിനി കണക്കുകൂട്ടൽ',
+                'apply-again': 'വീണ്ടും പ്രയോഗിക്കുക',
+                'delete': 'ഇല്ലാതാക്കുക'
             }
         };
 
@@ -1604,6 +1736,156 @@
 
             saveCustomVideos() {
                 localStorage.setItem('customVideos', JSON.stringify(this.customVideos));
+            }
+        }
+
+        // ==================== HISTORY MANAGEMENT ====================
+        class HistoryManager {
+            constructor() {
+                this.history = JSON.parse(localStorage.getItem('calculationHistory')) || [];
+                this.init();
+            }
+
+            init() {
+                // Add event listener for history nav item
+                document.getElementById('historyNavItem').addEventListener('click', () => {
+                    this.showHistoryModal();
+                });
+
+                // Close modal when clicking the close button
+                document.getElementById('closeHistoryModal').addEventListener('click', () => {
+                    document.getElementById('historyModal').style.display = 'none';
+                });
+
+                // Close modal when clicking outside
+                window.addEventListener('click', (event) => {
+                    if (event.target === document.getElementById('historyModal')) {
+                        document.getElementById('historyModal').style.display = 'none';
+                    }
+                });
+            }
+
+            addToHistory(calculation) {
+                const historyItem = {
+                    id: Date.now(),
+                    timestamp: new Date().toISOString(),
+                    type: calculation.type,
+                    data: calculation.data,
+                    summary: calculation.summary
+                };
+
+                this.history.unshift(historyItem); // Add to beginning
+                
+                // Keep only last 50 items
+                if (this.history.length > 50) {
+                    this.history = this.history.slice(0, 50);
+                }
+
+                this.saveHistory();
+            }
+
+            saveHistory() {
+                localStorage.setItem('calculationHistory', JSON.stringify(this.history));
+            }
+
+            clearHistory() {
+                this.history = [];
+                this.saveHistory();
+                this.showHistoryModal(); // Refresh the modal
+            }
+
+            deleteHistoryItem(id) {
+                this.history = this.history.filter(item => item.id !== id);
+                this.saveHistory();
+                this.showHistoryModal(); // Refresh the modal
+            }
+
+            showHistoryModal() {
+                const modal = document.getElementById('historyModal');
+                const content = document.getElementById('historyContent');
+                
+                if (this.history.length === 0) {
+                    content.innerHTML = `<p style="text-align: center; color: #666;" data-i18n="no-history">${translations[localStorage.getItem('preferredLanguage') || 'en']['no-history']}</p>`;
+                } else {
+                    let html = '<button class="btn btn-secondary clear-history-btn" onclick="historyManager.clearHistory()" data-i18n="clear-history">Clear History</button>';
+                    
+                    this.history.forEach(item => {
+                        const date = new Date(item.timestamp).toLocaleString();
+                        html += `
+                            <div class="history-item">
+                                <div class="history-time">${date}</div>
+                                <div class="history-type ${item.type}">${item.type === 'fertilizer' ? translations[localStorage.getItem('preferredLanguage') || 'en']['fertilizer-calculation'] : translations[localStorage.getItem('preferredLanguage') || 'en']['pesticide-calculation']}</div>
+                                <div class="history-content">
+                                    ${item.summary}
+                                </div>
+                                <div class="history-actions">
+                                    <button class="btn btn-primary" onclick="historyManager.applyAgain(${item.id})" data-i18n="apply-again">Apply Again</button>
+                                    <button class="btn btn-secondary" onclick="historyManager.deleteHistoryItem(${item.id})" data-i18n="delete">Delete</button>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    content.innerHTML = html;
+                }
+                
+                modal.style.display = 'flex';
+                
+                // Update translations for modal content
+                const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+                document.querySelectorAll('[data-i18n]').forEach(element => {
+                    const key = element.getAttribute('data-i18n');
+                    if (translations[currentLang] && translations[currentLang][key]) {
+                        element.textContent = translations[currentLang][key];
+                    }
+                });
+            }
+
+            applyAgain(id) {
+                const item = this.history.find(i => i.id === id);
+                if (!item) return;
+
+                // Close the modal
+                document.getElementById('historyModal').style.display = 'none';
+
+                // Navigate to the appropriate calculator
+                if (item.type === 'fertilizer') {
+                    // Show fertilizer calculator
+                    hideAllCalculators();
+                    document.getElementById('fertilizerCalculator').classList.add('active');
+                    
+                    // Fill in the form
+                    document.getElementById('fert-crop').value = item.data.crop;
+                    document.getElementById('fert-area').value = item.data.area;
+                    document.getElementById('fert-unit').value = item.data.unit;
+                    if (item.data.soilN) document.getElementById('soil-n').value = item.data.soilN;
+                    if (item.data.soilP) document.getElementById('soil-p').value = item.data.soilP;
+                    if (item.data.soilK) document.getElementById('soil-k').value = item.data.soilK;
+                    
+                    // Trigger calculation
+                    setTimeout(() => {
+                        document.getElementById('fert-calc').click();
+                    }, 100);
+                } else if (item.type === 'pesticide') {
+                    // Show pest control calculator
+                    hideAllCalculators();
+                    document.getElementById('pestControlCalculator').classList.add('active');
+                    
+                    // Fill in the form
+                    document.getElementById('pest-crop').value = item.data.crop;
+                    document.getElementById('pest-type').value = item.data.pestType;
+                    document.getElementById('infected-percent').value = item.data.infectedPercent;
+                    document.getElementById('area-pest').value = item.data.unit;
+                    document.getElementById('total-area').value = item.data.totalArea;
+                    document.getElementById('tank-size').value = item.data.tankSize;
+                    document.getElementById('area-per-tank').value = item.data.areaPerTank;
+                    document.getElementById('pesticide-strength').value = item.data.strength;
+                    
+                    // Trigger calculation
+                    setTimeout(() => {
+                        document.getElementById('pest-calc').click();
+                    }, 100);
+                }
             }
         }
 
@@ -1921,6 +2203,9 @@
             // Initialize video library manager
             window.videoLibraryManager = new VideoLibraryManager();
 
+            // Initialize history manager
+            window.historyManager = new HistoryManager();
+
             // Update location with enhanced detection
             getEnhancedLocation().then(location => {
                 updateLocationUI(location);
@@ -1952,6 +2237,9 @@
                         showPage('homePage');
                         hideAllCalculators();
                         setActiveNav('home');
+                    } else if (page === 'history') {
+                        // History is handled by the HistoryManager
+                        return;
                     } else {
                         redirectTo(page);
                     }
@@ -2057,6 +2345,23 @@
                 document.getElementById('fert-explain').innerText = `Calculation: base nutrient need (kg/ha) for ${crop} multiplied by area → subtract soil test values (if provided). Then nutrient mass converted to fertilizer mass using typical formulation percentages. Prices are sample values.`;
                 
                 document.getElementById('fert-result').classList.add('active');
+
+                // Save to history
+                const summary = `For ${areaVal} ${unit} of ${crop}<br>Urea: ${rec.totals.ureaKg} kg, DAP: ${rec.totals.dapKg} kg, MOP: ${rec.totals.mopKg} kg, Cost: ₹${rec.totalCost}`;
+                const historyData = {
+                    type: 'fertilizer',
+                    summary: summary,
+                    data: {
+                        crop: crop,
+                        area: areaVal,
+                        unit: unit,
+                        soilN: nVal,
+                        soilP: pVal,
+                        soilK: kVal,
+                        result: rec
+                    }
+                };
+                window.historyManager.addToHistory(historyData);
             });
             
             document.getElementById('fert-reset').addEventListener('click', function() {
@@ -2115,6 +2420,30 @@
                 document.getElementById('pest-safety').innerHTML = `<strong>Safety:</strong> Wear PPE, avoid spraying under windy conditions, follow label waiting period. Formulation strength input is for reference only — always follow the registered product label.`;
 
                 document.getElementById('pest-result').classList.add('active');
+
+                // Save to history
+                const summary = `Pest: ${def.name} on ${round(affectedHa,3)} ha<br>Total pesticide: ${formattedTotal} ml<br>Mix per tank: ${formattedPerTank} ml`;
+                const historyData = {
+                    type: 'pesticide',
+                    summary: summary,
+                    data: {
+                        crop: crop,
+                        pestType: pest,
+                        infectedPercent: infectedPct,
+                        unit: unit,
+                        totalArea: areaVal,
+                        tankSize: tankSize,
+                        areaPerTank: areaPerTank,
+                        strength: document.getElementById('pesticide-strength').value,
+                        result: {
+                            mlPerHa: mlPerHa,
+                            totalMl: formattedTotal,
+                            perTankMl: formattedPerTank,
+                            affectedHa: round(affectedHa,3)
+                        }
+                    }
+                };
+                window.historyManager.addToHistory(historyData);
             });
             
             document.getElementById('pest-reset').addEventListener('click', function() {
