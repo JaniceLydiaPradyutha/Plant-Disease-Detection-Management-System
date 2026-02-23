@@ -39,7 +39,10 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: var(--bg-gradient);
+            background: url("/static/background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             margin: 0;
             padding: 0;
             color: var(--text);
@@ -566,6 +569,150 @@
             margin: 0 auto 25px;
         }
 
+        /* ---------- HISTORY PREVIEW SECTION ---------- */
+        .history-preview {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 2px solid rgba(139, 195, 74, 0.3);
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .history-header h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .history-header h3 i {
+            color: var(--secondary);
+        }
+
+        .view-all-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 12px 30px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .view-all-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.5);
+        }
+
+        .recent-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .recent-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(139, 195, 74, 0.2);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .recent-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .recent-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(76, 175, 80, 0.2);
+        }
+
+        .recent-crop {
+            font-weight: 700;
+            color: var(--primary);
+            background: rgba(76, 175, 80, 0.1);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .recent-time {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .recent-disease {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+            padding-right: 25px;
+        }
+
+        .recent-confidence {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .recent-confidence-bar {
+            flex: 1;
+            height: 8px;
+            background: #e8f5e9;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .recent-confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--warning), var(--success));
+            border-radius: 4px;
+        }
+
+        .recent-confidence-value {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.9rem;
+            min-width: 45px;
+        }
+
+        .empty-history {
+            text-align: center;
+            padding: 40px;
+            background: rgba(139, 195, 74, 0.05);
+            border-radius: 12px;
+            color: var(--text-light);
+        }
+
+        .empty-history i {
+            font-size: 3rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
         /* ---------- ENHANCED ANIMATIONS ---------- */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(30px); }
@@ -644,6 +791,16 @@
             
             .result-header {
                 grid-template-columns: 1fr;
+            }
+            
+            .history-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .view-all-btn {
+                width: 100%;
+                justify-content: center;
             }
         }
 
@@ -770,14 +927,184 @@
                 </ul>
             </div>
             {% endif %}
+
+            <!-- Add this section after the existing result display -->
+            {% if processed_image %}
+            <div class="result-box" style="margin-top: 30px;">
+                <h3><i class="fas fa-exclamation-triangle"></i> Infected Region Analysis</h3>
+                
+                <div class="result-header" style="grid-template-columns: 1fr;">
+                    <div class="prediction-info">
+                        <p><strong><i class="fas fa-percent"></i> Infection Severity:</strong></p>
+                        <span class="badge" style="background: linear-gradient(135deg, #FF5722, #FF9800);">
+                            {{ infection_percent }}% Infected
+                        </span>
+                    </div>
+                </div>
+
+                <div class="image-preview">
+                    <h4><i class="fas fa-map-marked-alt"></i> Highlighted Infected Regions</h4>
+                    <p style="color: var(--text-light); margin-bottom: 20px;">
+                        <i class="fas fa-info-circle"></i> 
+                        Red contours show detected infected areas. Green circles mark the region boundaries.
+                    </p>
+                    <div class="preview-container">
+                        <img src="{{ url_for('static', filename=processed_image) }}" 
+                             alt="Highlighted Infected Regions" 
+                             class="preview-image"
+                             style="border: 4px solid #FF5722;">
+                    </div>
+                    
+                    <!-- Legend for visualization -->
+                    <div style="display: flex; justify-content: center; gap: 30px; margin-top: 20px; flex-wrap: wrap;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="width: 30px; height: 3px; background: red; border-radius: 2px;"></div>
+                            <span>Infected Area Outline</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="width: 20px; height: 20px; border: 3px solid green; border-radius: 50%;"></div>
+                            <span>Region Boundary</span>
+                        </div>
+                    </div>
+                </div>
+
+                {% if infection_percent > 30 %}
+                <div style="background: rgba(255, 87, 34, 0.1); border-left: 5px solid #FF5722; padding: 20px; border-radius: 12px; margin-top: 25px;">
+                    <p style="color: #FF5722; font-weight: 600; margin-bottom: 10px;">
+                        <i class="fas fa-exclamation-circle"></i> High Infection Alert
+                    </p>
+                    <p style="color: var(--text);">
+                        The plant shows significant infected areas ({{ infection_percent }}% of leaf surface). 
+                        Immediate treatment is recommended based on the disease identified above.
+                    </p>
+                </div>
+                {% elif infection_percent > 10 %}
+                <div style="background: rgba(255, 193, 7, 0.1); border-left: 5px solid #FFC107; padding: 20px; border-radius: 12px; margin-top: 25px;">
+                    <p style="color: #FFC107; font-weight: 600; margin-bottom: 10px;">
+                        <i class="fas fa-exclamation-triangle"></i> Moderate Infection
+                    </p>
+                    <p style="color: var(--text);">
+                        The plant shows moderate infection ({{ infection_percent }}% of leaf surface). 
+                        Monitor closely and consider preventive treatment.
+                    </p>
+                </div>
+                {% else %}
+                <div style="background: rgba(76, 175, 80, 0.1); border-left: 5px solid #4CAF50; padding: 20px; border-radius: 12px; margin-top: 25px;">
+                    <p style="color: #4CAF50; font-weight: 600; margin-bottom: 10px;">
+                        <i class="fas fa-check-circle"></i> Low Infection
+                    </p>
+                    <p style="color: var(--text);">
+                        The plant shows minimal infection ({{ infection_percent }}% of leaf surface). 
+                        Continue regular monitoring and preventive care.
+                    </p>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <!-- History Preview Section -->
+            <div class="history-preview">
+                <div class="history-header">
+                    <h3><i class="fas fa-history"></i> Recent Predictions</h3>
+                    <a href="/history" class="view-all-btn">
+                        <i class="fas fa-chart-bar"></i>
+                        View Full History Dashboard
+                    </a>
+                </div>
+                
+                <div id="recentPredictions" class="recent-grid">
+                    <!-- Recent predictions will be loaded here by JavaScript -->
+                </div>
+            </div>
         </div>
     </main>
 
     <footer>
-        <p>HACK-AI-THON 2.0 | Team GenZ Coderz | Farmer's Disease Diagnostic Portal</p>
+        <p>Insight Forge | Farmer's Disease Diagnostic Portal</p>
     </footer>
 
     <script>
+        // ==================== HISTORY MANAGEMENT ====================
+        
+        // Load predictions from localStorage
+        let predictions = JSON.parse(localStorage.getItem('diseasePredictions')) || [];
+        
+        // Save current prediction if it exists
+        {% if result and selected_crop %}
+        (function() {
+            // Create prediction object
+            const newPrediction = {
+                id: Date.now().toString(),
+                crop: "{{ selected_crop }}",
+                disease: "{{ result.prediction }}",
+                confidence: {{ result.confidence }},
+                timestamp: new Date().toISOString()
+            };
+            
+            // Add to predictions
+            predictions.unshift(newPrediction);
+            
+            // Keep only last 50 predictions
+            if (predictions.length > 50) {
+                predictions = predictions.slice(0, 50);
+            }
+            
+            // Save back to localStorage
+            localStorage.setItem('diseasePredictions', JSON.stringify(predictions));
+        })();
+        {% endif %}
+        
+        // Display recent predictions
+        function displayRecentPredictions() {
+            const container = document.getElementById('recentPredictions');
+            
+            if (!predictions || predictions.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-history" style="grid-column: 1/-1;">
+                        <i class="fas fa-history"></i>
+                        <p>No prediction history yet. Your recent predictions will appear here.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Show only last 3 predictions
+            const recent = predictions.slice(0, 3);
+            
+            container.innerHTML = '';
+            recent.forEach(pred => {
+                const date = new Date(pred.timestamp);
+                const formattedDate = date.toLocaleDateString('en-US', { 
+                    month: 'short', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                const card = document.createElement('div');
+                card.className = 'recent-card';
+                card.onclick = function() {
+                    window.location.href = '/history';
+                };
+                
+                card.innerHTML = `
+                    <div class="recent-card-header">
+                        <span class="recent-crop"><i class="fas fa-leaf"></i> ${pred.crop}</span>
+                        <span class="recent-time"><i class="far fa-clock"></i> ${formattedDate}</span>
+                    </div>
+                    <div class="recent-disease">${pred.disease}</div>
+                    <div class="recent-confidence">
+                        <span class="recent-confidence-value">${pred.confidence}%</span>
+                        <div class="recent-confidence-bar">
+                            <div class="recent-confidence-fill" style="width: ${pred.confidence}%"></div>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+        
         // Enhanced File input handling
         document.getElementById('file-input').addEventListener('change', function(e) {
             const fileContainer = document.getElementById('selected-file-container');
@@ -849,7 +1176,10 @@
                 card.style.opacity = '1';
                 card.style.transform = 'translateY(0)';
             }, 100);
+            
+            // Display recent predictions
+            displayRecentPredictions();
         });
     </script>
 </body>
-</html> 
+</html>
